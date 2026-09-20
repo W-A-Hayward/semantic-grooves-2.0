@@ -10,11 +10,12 @@ func parse_review(review Review) []Review {
 	var chunked_reviews []Review
 	for _, value := range paragraphs {
 		chunk := Review{
-			Body:   value,
-			Artist: review.Artist,
-			Genre:  review.Genre,
-			Album:  review.Album,
-			Score:  review.Score,
+			Body:      value,
+			ReviewUrl: review.ReviewUrl,
+			Artist:    review.Artist,
+			Genre:     review.Genre,
+			Album:     review.Album,
+			Score:     review.Score,
 		}
 
 		chunked_reviews = append(chunked_reviews, chunk)

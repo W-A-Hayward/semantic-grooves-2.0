@@ -6,6 +6,7 @@ import (
 
 type Review struct {
 	Body   string
+	Url    string
 	Artist string
 	Genre  string
 	Album  string
@@ -14,6 +15,7 @@ type Review struct {
 
 func fetch_reviews(conn *sql.DB, page_number int, page_length int) ([]Review, error) {
 	query := `SELECT  r.body
+									, r.review_url
 									, a.name
 									, gr.genre
 									, t.title
@@ -42,7 +44,7 @@ func fetch_reviews(conn *sql.DB, page_number int, page_length int) ([]Review, er
 
 	for rows.Next() {
 		var rev Review
-		if err := rows.Scan(&rev.Body, &rev.Artist, &rev.Genre,
+		if err := rows.Scan(&rev.Body, &rev.Url, &rev.Artist, &rev.Genre,
 			&rev.Album, &rev.Score); err != nil {
 			return nil, err
 		}
