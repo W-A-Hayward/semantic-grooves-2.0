@@ -13,7 +13,7 @@ type Review struct {
 	Score  float64
 }
 
-func fetch_reviews(conn *sql.DB, page_number int, page_length int) ([]Review, error) {
+func fetchReviews(conn *sql.DB, pageNumber int, pageLength int) ([]Review, error) {
 	query := `SELECT  r.body
 									, r.review_url
 									, a.name
@@ -34,7 +34,7 @@ func fetch_reviews(conn *sql.DB, page_number int, page_length int) ([]Review, er
 						LIMIT  ?
 						OFFSET ?`
 
-	rows, err := conn.Query(query, page_length, page_number)
+	rows, err := conn.Query(query, pageLength, pageNumber)
 	if err != nil {
 		return nil, err
 	}
