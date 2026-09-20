@@ -9,8 +9,8 @@ package main
 // handles sync before shutting down
 
 import (
+	"context"
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "modernc.org/sqlite"
@@ -23,9 +23,24 @@ func main() {
 	}
 	defer db.Close()
 
-	reviews, err := fetch_reviews(db, 1, 2)
+	writer := new_kafka_writer()
+	defer writer.Close()
+
+	reviews, err := fetchReviews(db, 1, 30)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(reviews[0])
+
+	ctx := context.Background()
+	for _, value := range reviews {
+		chunks := parse_review(value)
+		for _, chunk := range chunks {
+			if chunk.Body == "" {
+				continue
+			}
+			if err := sendReview(ctx, writer, chunk.Url, chunk.Body); err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
 }
