@@ -16,33 +16,33 @@ This refactor exists as a deliberate learning vehicle, prompted by working throu
 
 ## Roadmap
 
-- **Phase 0 — Design & local dev setup**
-  - Lock in architecture decisions
-  - Set up local Kubernetes/Kafka dev environment
+[x] **Phase 0 — Design & local dev setup**
+  [x] Lock in architecture decisions
+  [x] Set up local Kubernetes/Kafka dev environment
 
-- **Phase 1 — Bootstrap pipeline (end-to-end)**
-  - Ingestion service
-  - LLM prompt schema for mood/genre tagging
-  - GPU worker throughput sizing
-  - Idempotency guarantees
-  - Embedding generation and index build
+[ ] **Phase 1 — Bootstrap pipeline (end-to-end)**
+  [x] Ingestion service
+  [x] LLM prompt schema for mood/genre tagging
+  [ ] GPU worker throughput sizing
+  [ ] Idempotency guarantees
+  [ ] Embedding generation and index build
 
-- **Phase 2 — Search API & frontend**
-  - Go Search API
-  - Frontend for mood-based search
+[ ] **Phase 2 — Search API & frontend**
+  [ ] Go Search API
+  [ ] Frontend for mood-based search
 
-- **Phase 3 — Live review loop**
-  - Click-gated review ingestion
-  - Immediate re-tagging on new reviews
+[ ] **Phase 3 — Live review loop**
+  [ ] Click-gated review ingestion
+  [ ] Immediate re-tagging on new reviews
 
-- **Phase 4 — Containerization**
-  - Dockerize all services
+[ ] **Phase 4 — Containerization**
+  [ ] Dockerize all services
 
-- **Phase 5 — Scaling**
-  - HPA tuning for search API and tagging service
-  - Kafka partitioning validation under load
+[ ] **Phase 5 — Scaling**
+  [ ] HPA tuning for search API and tagging service
+  [ ] Kafka partitioning validation under load
 
-- **Phase 6 — Hardening & polish**
-  - Observability (Prometheus)
-  - Failure handling and resilience testing
-  - Final cleanup
+[ ] **Phase 6 — Hardening & polish**
+  [ ] Observability (Prometheus)
+  [ ] Failure handling and resilience testing
+  [ ] Final cleanup
