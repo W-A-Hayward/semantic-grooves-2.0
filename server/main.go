@@ -12,6 +12,7 @@ import (
 	"context"
 	"database/sql"
 	"log"
+	"strings"
 
 	_ "modernc.org/sqlite"
 )
@@ -32,15 +33,14 @@ func main() {
 	}
 
 	ctx := context.Background()
-	for _, value := range reviews {
-		chunks := parse_review(value)
-		for _, chunk := range chunks {
-			if chunk.Body == "" {
-				continue
-			}
-			if err := sendReview(ctx, writer, chunk.Url, chunk.Body); err != nil {
-				log.Fatal(err)
-			}
+	// One message per album: the tagger needs the whole review to judge its
+	// mood, so reviews are no longer split into paragraphs here.
+	for _, review := range reviews {
+		if strings.TrimSpace(review.Body) == "" {
+			continue
+		}
+		if err := sendReview(ctx, writer, review); err != nil {
+			log.Fatal(err)
 		}
 	}
 }
