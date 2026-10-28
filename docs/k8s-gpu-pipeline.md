@@ -33,7 +33,11 @@ Facts I measured on this machine and in the repo, because they shape every decis
 | Data | `data/data.sqlite3`: 24,169 reviews, 25,212 albums ("tombstones"), mean review length ≈ 4,165 chars, max 22,450 | Whole reviews fit in a model context window (see 2.1). |
 | Go | 1.27.0 | Matches your `go.mod`. |
 
-### Existing issues I found (I have *not* changed your code)
+### Existing issues I found (since fixed in `server/`)
+
+These were fixed in place in `server/` after the first draft of this guide: the field-name build error, the offset bug, `go mod tidy`, the duplicating query (now one row per album, verified at 25,212 rows with no paging overlap), and per-album instead of per-paragraph messages. `server/` now publishes the same JSON shape as `schema.Album` in Part 6, so the Part 6 worker can consume it as is; set `KAFKA_TOPIC=albums` (its default is still `reviews`). `cmd/ingest` in Part 6 is the equivalent for the multi-binary layout and is optional.
+
+What each problem was:
 
 1. **`server/` does not build.** `parser.go` uses `ReviewUrl` but the struct field in `fetcher.go` is `Url`. `go build` fails with `unknown field ReviewUrl`.
 2. **`fetchReviews(db, 1, 30)` passes the page number as the SQL `OFFSET`**, so "page 1" skips 1 row, not 30.
